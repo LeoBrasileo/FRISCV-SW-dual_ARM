@@ -1,0 +1,8 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]C:/Users/Leo/Desktop/FRISCV/FRISCV-system-SW/friscv_platform/export/friscv_platform/sw/friscv_platform/boot/fsbl.elf
+	C:/Users/Leo/Desktop/FRISCV/FRISCV-system-SW/dual_arm_0/_ide/bitstream/friscv_system_fpga_wrapper.bit
+	C:/Users/Leo/Desktop/FRISCV/FRISCV-system-SW/dual_arm_0/Debug/dual_arm_0.elf
+	C:\Users\Leo\Desktop\FRISCV\FRISCV-system-SW\dual_arm_1\Debug\dual_arm_1.elf
+}

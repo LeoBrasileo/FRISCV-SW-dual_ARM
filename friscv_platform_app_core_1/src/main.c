@@ -1,0 +1,49 @@
+#include "main.h"
+
+int main(void)
+{
+	int status;
+
+	status = main_init();
+	if (status == XST_FAILURE) {
+		return XST_FAILURE;
+	}
+
+	//status = clk_gpio_init();
+
+	delay_msec(20);
+	COMM_VAL = 0;
+	LOG("[ARM-1] ARM-1 activated\n");
+	delay_msec(20);
+
+	//Disable cache on OCM
+	Xil_SetTlbAttributes(0xFFFF0000,0x14de2); // S=b1 TEX=b100 AP=b11, Domain=b1111, C=b0, B=b0
+
+	u32 delay_cpu_us = clk_compute_delay_us(CLK_CPU_FREQ_MHZ);
+	u32 delay_mem_us = clk_compute_delay_us(CLK_MEM_FREQ_MHZ);
+
+	while (1) {
+		// CPU clock toggle
+		cpu_clk_up();
+		LOG("[ARM-1] cpu_clk HIGH\n");
+		delay_usec(delay_cpu_us);
+
+		mem_clk_up();
+		LOG("[ARM-1] mem_clk HIGH\n");
+		delay_usec(delay_mem_us);
+
+		mem_clk_down();
+		LOG("[ARM-1] mem_clk LOW\n");
+		delay_usec(delay_mem_us);
+
+		mem_clk_up();
+		LOG("[ARM-1] mem_clk HIGH\n");
+		delay_usec(delay_mem_us);
+
+		mem_clk_down();
+		LOG("[ARM-1] mem_clk LOW\n");
+		delay_usec(delay_mem_us);
+	}
+
+	return status;
+}
