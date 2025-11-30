@@ -47,8 +47,8 @@ void turnDebugOff();
 #define ARM1_BASEADDR 0x1FF00000
 #define ARM1_SIZE      0x00040000
 #define COMM_VAL  (*(volatile unsigned long *)(0xFFFF0000))
-#define CLK_CPU_FREQ_MHZ 100
-#define CLK_MEM_FREQ_MHZ 200
+#define CLK_CPU_FREQ_KHZ 100
+#define CLK_MEM_FREQ_KHZ 400
 
 void start_arm1(void);
 void signal_arm1(void);

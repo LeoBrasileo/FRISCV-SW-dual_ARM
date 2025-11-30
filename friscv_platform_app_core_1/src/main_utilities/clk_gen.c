@@ -21,11 +21,13 @@ void mem_clk_down(void) {
 }
 
 
-u32 clk_compute_delay_us(float freq_mhz) {
-    float period_us = 1.0f / freq_mhz;  // microseconds
-    float half_period = period_us / 2.0f;
+u32 clk_compute_delay_us(float freq_khz) {
+    // period in microseconds
+    float period_us = 1000.0f / freq_khz;
 
-    // rounding
-    u32 result = (u32)(half_period + 0.5f);
-    return result;
+    // half period
+    float half_period_us = period_us / 2.0f;
+
+    // round to nearest integer
+    return (u32)(half_period_us + 0.5f);
 }

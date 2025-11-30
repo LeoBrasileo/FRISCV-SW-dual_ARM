@@ -9,6 +9,13 @@ int main_init(){
 		return XST_FAILURE;
 	}
 
+	// Initialize AXI GPIOs
+	status = gpio_init();
+	if (status == XST_FAILURE) {
+		LOG("[ERROR] Failed to initialize AXI GPIOs\n");
+		return XST_FAILURE;
+	}
+
 	delay_sec(1);
 	return status;
 }

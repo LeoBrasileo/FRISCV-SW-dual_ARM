@@ -41,7 +41,7 @@
                             							
                             <tool id="xilinx.gnu.armv7.c.toolchain.assembler.debug.722305693" name="ARM v7 gcc assembler" superClass="xilinx.gnu.armv7.c.toolchain.assembler.debug">
                                 								
-                                <option id="xilinx.gnu.both.asm.option.include.paths.1109540655" name="Include Paths (-I)" superClass="xilinx.gnu.both.asm.option.include.paths" useByScannerDiscovery="false" valueType="includePath"/>
+                                <option id="xilinx.gnu.both.asm.option.include.paths.1109540655" name="Include Paths (-I)" superClass="xilinx.gnu.both.asm.option.include.paths" useByScannerDiscovery="false"/>
                                 								
                                 <inputType id="xilinx.gnu.assembler.input.1042032887" superClass="xilinx.gnu.assembler.input"/>
                                 							
@@ -99,7 +99,7 @@
                                 								
                                 <option id="xilinx.gnu.c.link.option.ldflags.1838861562" name="Linker Flags" superClass="xilinx.gnu.c.link.option.ldflags" useByScannerDiscovery="false" value=" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec" valueType="string"/>
                                 								
-                                <option id="xilinx.gnu.c.link.option.libs.1088053606" name="Libraries (-l)" superClass="xilinx.gnu.c.link.option.libs" useByScannerDiscovery="false" valueType="libs"/>
+                                <option id="xilinx.gnu.c.link.option.libs.1088053606" name="Libraries (-l)" superClass="xilinx.gnu.c.link.option.libs" useByScannerDiscovery="false"/>
                                 								
                                 <inputType id="xilinx.gnu.linker.input.711451731" superClass="xilinx.gnu.linker.input">
                                     									
