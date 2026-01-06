@@ -2,7 +2,6 @@
 #define MAIN_UTILS_HEADER
 
 #include "../friscv_com/friscv_com.h"
-#include "../host_loader/host_loader.h"
 #include "../uart/uart.h"
 #include "../gpio/gpio.h"
 #include "../util/delay/delay.h"
@@ -16,18 +15,7 @@
 #define PROGRAM_WORD_COUNT (1 << 10) // 1024 * 4B = 4kB
 #define PRINTABLE_BUFFER_LEN 256
 
-int reset_processor(void);
 int main_init(void);
-int run(void);
-int pause(void);
-int clearMem(void);
-int writeProgram(void);
-int writeData(void);
-int readMemRange(void);
-int readMemSingle(void);
-
-void turnDebugOn();
-void turnDebugOff();
 
 #endif
 

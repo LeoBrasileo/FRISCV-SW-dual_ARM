@@ -13,22 +13,19 @@ int writeProgram(){
 	for (u32 i = 0; i < PROGRAM_WORD_COUNT; i++){
 		COMM_MEM[i] = program[i];
 	}
-	LOG("[ARM] Loaded program into DRAM\n");
 
-//	turnDebugAndWriteOn();
-//	lowerDebugClock();
-//
-//	for (u32 i = 0;i < PROGRAM_WORD_COUNT;i++){
-//		setTargetAdress(i);
-//		setInputData(program[i]);
-//		waitDebugClockCycle();
-//	}
-	//LOG("[ARM] Loaded program into FRISCV\n");
+	// visibility to ARM1
+	barrier_system();
+	sync_system();
+	Xil_DCacheFlushRange(COMM_BASE_ADDR, PROGRAM_WORD_COUNT * sizeof(u32));
 
-//	turnDebugOn();
-
-	// TODO!!!!!
-
+	// sanity check just in case
+	if (COMM_MEM[0] != program[0]) {
+	    LOG("[ERROR] Program load failed!\n\r");
+	    status = XST_FAILURE;
+	} else {
+		LOG("[ARM] Loaded program into DRAM\n");
+	}
 
 	return status;
 }

@@ -40,6 +40,9 @@ void turnDebugOn();
 //void turnDebugAndWriteOn();
 void turnDebugOff();
 
+#define barrier_system() __asm__ volatile("dmb sy")
+#define sync_system() __asm__ volatile("dsb sy")
+
 #endif
 
 #ifndef ARM1_UTILITIES_H
