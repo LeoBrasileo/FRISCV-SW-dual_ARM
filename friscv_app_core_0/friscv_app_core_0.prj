@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="friscv_app_core_0" location="C:/Users/Leo/Desktop/FRISCV/FRISCV-system-SW/friscv_app_core_0" platform="C:/Users/Leo/Desktop/FRISCV/FRISCV-system-SW/friscv_platform_memory/export/friscv_platform_memory/friscv_platform_memory.xpfm" platformUID="xilinx:pynq-z2::0.0(custom)" systemProject="friscv_app_system" sysConfig="friscv_platform_memory" runtime="C/C++" cpu="standalone_domain" cpuInstance="ps7_cortexa9_0" os="standalone" mssSignature="48b10fe8e308ff5d1a7ef4f51855e307">
+  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.1785075890">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+    <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <configuration name="Release" id="xilinx.gnu.armv7.exe.release.1545742784" dirty="true">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <template appTemplateName="empty_application"/>
+</sdkproject:SdkProject>
