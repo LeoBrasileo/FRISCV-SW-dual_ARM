@@ -16,11 +16,24 @@
 #define PRINTABLE_BUFFER_LEN 256
 
 int main_init(void);
+void cpu_clk_up(void);
+void cpu_clk_down(void);
 
-#endif
 
-#ifndef ARM1_UTILITIES_H
-#define ARM1_UTILITIES_H
+void send_i_mem_data(u32 data);
+u32 receive_i_mem_address(void);
+
+int i_mem_enable_out(void); // it is really just a bit
+
+void send_d_mem_data(u32 data);
+u32 receive_d_mem_data(void);
+
+u32 receive_d_mem_address(void);
+
+int d_write_out(void);
+int d_mem_enable_out(void);
+int d_size_out(void);
+
 
 // ARM-1 addresses and instructions
 #define sev() __asm__("sev")
@@ -32,10 +45,6 @@ int main_init(void);
 #define CLK_CPU_FREQ_KHZ 100
 #define CLK_MEM_FREQ_KHZ 400
 
-void cpu_clk_up(void);
-void cpu_clk_down(void);
-void mem_clk_up(void);
-void mem_clk_down(void);
 u32 clk_compute_delay_us(float);
 
 #endif

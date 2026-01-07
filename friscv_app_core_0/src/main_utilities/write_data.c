@@ -29,5 +29,8 @@ int writeData(){
 
 	LOG("[ARM] Loaded data into DRAM\n");
 
+	// TODO: Maybe its a good idea to translate the addresses
+	// in such way you write on the addresses provided but always from the beginning of the data loaded from PC
+
 	return status;
 }
