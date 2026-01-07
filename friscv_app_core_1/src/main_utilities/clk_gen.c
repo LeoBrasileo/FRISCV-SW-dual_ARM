@@ -10,6 +10,12 @@ void cpu_clk_down(void) {
     XGpio_DiscreteWrite(&axi_gpio_clk_gen_n_debug, 1, clk_cpu);
 }
 
+void cpu_clk_half_cycle(void){
+	cpu_clk_up();
+	delay_msec(1);
+	cpu_clk_down();
+}
+
 
 u32 clk_compute_delay_us(float freq_khz) {
     // period in microseconds

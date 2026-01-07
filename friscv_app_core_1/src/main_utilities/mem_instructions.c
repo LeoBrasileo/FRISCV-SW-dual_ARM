@@ -13,8 +13,8 @@ u32 receive_i_mem_address(){
 	return i_addr_out;
 }
 
-int i_mem_enable_out(){
-	int i_mem_en_out;
+uint8_t i_mem_enable_out(){
+	uint8_t i_mem_en_out;
 	i_mem_en_out = XGpio_DiscreteRead(&axi_gpio_i_mem_ctrl, 1);
 	delay_msec(1);
 

@@ -18,20 +18,21 @@
 int main_init(void);
 void cpu_clk_up(void);
 void cpu_clk_down(void);
+void cpu_clk_half_cycle(void);
 
 
 void send_i_mem_data(u32 data);
 u32 receive_i_mem_address(void);
 
-int i_mem_enable_out(void); // it is really just a bit
+uint8_t i_mem_enable_out(void); // it is really just a bit
 
 void send_d_mem_data(u32 data);
 u32 receive_d_mem_data(void);
 
 u32 receive_d_mem_address(void);
 
-int d_write_out(void);
-int d_mem_enable_out(void);
+uint8_t d_write_out(void);
+uint8_t d_mem_enable_out(void);
 int d_size_out(void);
 
 

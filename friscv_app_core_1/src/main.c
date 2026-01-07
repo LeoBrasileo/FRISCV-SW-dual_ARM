@@ -19,25 +19,88 @@ int main(void)
 	u32 delay_cpu_us = clk_compute_delay_us(CLK_CPU_FREQ_KHZ);
 	u32 delay_mem_us = clk_compute_delay_us(CLK_MEM_FREQ_KHZ);
 
+	u32 addr;
+	u32 word;
+	u32 data;
+	u32 offset;
+	u32 size;
+
 	while (1) {
+//		cpu_clk_up();
+//		delay_usec(delay_cpu_us);
+//		cpu_clk_down();
+//		delay_usec(delay_cpu_us);
 
-		cpu_clk_up();
-		//mem_clk_up();
+		// Instruction Memory Phase
+		if (i_mem_enable_out()) {
 
-		delay_usec(delay_mem_us);
+			addr = receive_i_mem_address();
+			word = addr >> 2;
 
-		//mem_clk_down();
+			/* Make sure we see latest DRAM */
+			Xil_DCacheInvalidateRange((UINTPTR)&COMM_MEM[word],sizeof(u32));
 
-		delay_usec(delay_mem_us);
+			data = COMM_MEM[word];
 
-		cpu_clk_down();
-		//mem_clk_up();
+			/* Drive instruction back to CPU */
+			send_i_mem_data(data);
 
-		delay_usec(delay_mem_us);
+			cpu_clk_half_cycle();
 
-		//mem_clk_down();
+		// Data Memory Phase
+		} else if (d_mem_enable_out()) {
 
-		delay_usec(delay_mem_us);
+			addr = receive_d_mem_address();
+			word = addr >> 2;
+			offset = addr & 0x3;
+			size = d_size_out();
+
+			if (!d_write_out())	{
+				// READ
+
+				Xil_DCacheInvalidateRange((UINTPTR)&COMM_MEM[word], sizeof(u32));
+
+				data = COMM_MEM[word];
+				send_d_mem_data(data);
+			} else {
+				// WRITE
+
+				data = receive_d_mem_data();
+
+				switch(size){
+					case 0: { //Byte
+						u32 tmp = COMM_MEM[word];
+						tmp &= ~(0xFF << (offset * 8));
+						tmp |=  ((data & 0xFF) << (offset * 8));
+						COMM_MEM[word] = tmp;
+						break;
+					}
+					case 1: { //Half Word
+						u32 tmp = COMM_MEM[word];
+						if ((offset & 0x2) == 0) {
+							tmp &= ~0x0000FFFF;
+							tmp |=  (data & 0xFFFF);
+						} else {
+							tmp &= ~0xFFFF0000;
+							tmp |=  (data << 16);
+						}
+						COMM_MEM[word] = tmp;
+						break;
+					}
+					case 2: { //Word
+						COMM_MEM[word] = data;
+						break;
+					}
+					default:
+						break;
+				}
+
+				Xil_DCacheFlushRange((UINTPTR)&COMM_MEM[word], sizeof(u32));
+			}
+
+			cpu_clk_half_cycle();
+		}
+
 	}
 
 	return status;
