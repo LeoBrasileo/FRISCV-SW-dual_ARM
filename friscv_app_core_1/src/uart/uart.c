@@ -74,9 +74,34 @@ void uart_send_int(const u32 intp)
 	uart_send_byte(i);
 }
 
+void uart_send_hex(const u32 value)
+{
+    int i;
+    uint8_t nibble;
+
+    /* Print 8 hex digits (32 bits) */
+    for (i = 28; i >= 0; i -= 4) {
+        nibble = (value >> i) & 0xF;
+
+        if (nibble < 10)
+            uart_send_byte(nibble + '0');
+        else
+            uart_send_byte(nibble + 'A' - 10);
+    }
+}
+
 
 void uart_send_string(const char *string, const unsigned int strlen)
 {
 	// Send buffer
 	XUartPs_Send(&uart_driver, (u8 *)string, strlen);
+}
+
+u32 uart_recv_u32(void)
+{
+    u32 v = 0;
+    for (int i = 0; i < 4; i++) {
+        v |= ((u32)uart_recv_byte()) << (8 * i);
+    }
+    return v;
 }

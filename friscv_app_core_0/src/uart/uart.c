@@ -96,3 +96,12 @@ void uart_send_string(const char *string, const unsigned int strlen)
 	// Send buffer
 	XUartPs_Send(&uart_driver, (u8 *)string, strlen);
 }
+
+u32 uart_recv_u32(void)
+{
+    u32 v = 0;
+    for (int i = 0; i < 4; i++) {
+        v |= ((u32)uart_recv_byte()) << (8 * i);
+    }
+    return v;
+}

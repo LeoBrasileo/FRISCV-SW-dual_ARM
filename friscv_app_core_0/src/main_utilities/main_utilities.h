@@ -26,18 +26,7 @@ int writeData(void);
 int readMemRange(void);
 int readMemSingle(void);
 
-// Memory now is managed in DRAM, no use for inserting data from debug
-//void setTargetAdress(u32 adress);
-//void setInputData(u32 data);
-
-// debug clock ceased to exist :(
-//void raiseDebugClock();
-//void lowerDebugClock();
-//void waitDebugClockCycle();
-
 void turnDebugOn();
-// there is no write on flag anymore
-//void turnDebugAndWriteOn();
 void turnDebugOff();
 
 #define barrier_system() __asm__ volatile("dmb sy")
@@ -55,6 +44,25 @@ void turnDebugOff();
 #define ARM1_SIZE      0x04A00000
 #define COMM_BASE_ADDR 0x17300000
 #define COMM_MEM ((volatile unsigned long *)COMM_BASE_ADDR)
+#define COMM_SHARED_SIZE   (62 * 1024 * 1024)  // 62 MB
+
+// Internal control flags, last 4 bytes
+#define COMM_CTRL_ADDR   (COMM_BASE_ADDR + COMM_SHARED_SIZE - 4)
+typedef union {
+    u32 raw;
+    struct {
+        u32 pause : 1;   // bit 0
+        u32 debug : 1;   // bit 1
+        u32 reserved : 30;
+    };
+} comm_ctrl_t;
+#define COMM_CTRL   (*(volatile comm_ctrl_t *)COMM_CTRL_ADDR)
+// Debug buffer, 4kB
+#define COMM_DEBUG_SIZE  (4 * 1024)
+#define COMM_DEBUG_ADDR  (COMM_CTRL_ADDR - COMM_DEBUG_SIZE)
+#define COMM_DEBUG_WORDS (COMM_DEBUG_SIZE / sizeof(u32))
+#define COMM_DEBUG_MEM  ((volatile u32 *)COMM_DEBUG_ADDR)
+
 
 void start_arm1(void);
 

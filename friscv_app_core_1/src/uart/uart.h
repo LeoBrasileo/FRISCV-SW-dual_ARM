@@ -9,9 +9,12 @@ int uart_init(void);
 unsigned int uart_recv_byte(void);
 void uart_send_byte(const uint8_t byte);
 void uart_send_int(const uint32_t intp);
+void uart_send_hex(const uint32_t value);
 void uart_send_string(const char *string, const unsigned int strlen);
 
 u32 uart_receive_4_digit_num();
 void uart_send_u32(u32 number);
+
+u32 uart_recv_u32(void);
 
 #endif

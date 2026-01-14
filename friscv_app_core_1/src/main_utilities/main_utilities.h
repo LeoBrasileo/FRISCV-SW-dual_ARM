@@ -46,6 +46,28 @@ int d_size_out(void);
 #define CLK_CPU_FREQ_KHZ 100
 #define CLK_MEM_FREQ_KHZ 400
 
+#define COMM_SHARED_SIZE   (62 * 1024 * 1024)  // 62 MB
+// Internal control flags, last 4 bytes
+#define COMM_CTRL_ADDR   (COMM_BASE_ADDR + COMM_SHARED_SIZE - 4)
+typedef union {
+    u32 raw;
+    struct {
+        u32 pause : 1;   // bit 0
+        u32 debug : 1;   // bit 1
+        u32 reserved : 30;
+    };
+} comm_ctrl_t;
+#define COMM_CTRL   (*(volatile comm_ctrl_t *)COMM_CTRL_ADDR)
+// Debug buffer, 4kB
+#define COMM_DEBUG_SIZE  (4 * 1024)
+#define COMM_DEBUG_ADDR  (COMM_CTRL_ADDR - COMM_DEBUG_SIZE)
+#define COMM_DEBUG_WORDS (COMM_DEBUG_SIZE / sizeof(u32))
+#define COMM_DEBUG_MEM  ((volatile u32 *)COMM_DEBUG_ADDR)
+
 u32 clk_compute_delay_us(float);
+
+
+#define INSTRUCTION_CACHE_SIZE 1024
+void preload_instruction_cache(u32);
 
 #endif

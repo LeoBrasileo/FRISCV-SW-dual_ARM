@@ -23,6 +23,20 @@ int main(void)
 	u32 size;
 
 	while (1) {
+		// pause busy waiting
+		while (COMM_CTRL.pause) {}
+
+		// debug check
+		if (COMM_CTRL.debug) {
+			Debug();
+			COMM_CTRL.debug = 0;
+			continue;
+		}
+
+		// Rising edge
+		cpu_clk_up();
+		delay_usec(10);
+
 		// Instruction Memory Phase
 		if (i_mem_enable_out()) {
 
@@ -31,16 +45,27 @@ int main(void)
 			addr = receive_i_mem_address();
 			word = addr >> 2;
 
-			// Invalidate Cache
-			Xil_DCacheInvalidateRange((UINTPTR)&COMM_MEM[word],sizeof(u32));
+			if (addr < (60 * 1024 * 1024)) { // check boundaries
+				// Invalidate Cache
+				Xil_DCacheInvalidateRange((UINTPTR)&COMM_MEM[word],sizeof(u32));
 
-			data = COMM_MEM[word];
+				data = COMM_MEM[word];
 
-			// Drive instruction back to CPU
-			send_i_mem_data(data);
+				// Drive instruction back to CPU
+				send_i_mem_data(data);
+			}else {
+				//LOG("[ERROR] IF out of range\n");
+				//TODO: tbh I dont know why we end up sending invalid addresses, check internal CPU system
+			}
+		}
 
 		// Data Memory Phase
-		} else if (d_mem_enable_out()) {
+
+		// Falling edge
+		cpu_clk_down();
+		delay_usec(10);
+
+		if (d_mem_enable_out()) {
 
 			addr = receive_d_mem_address();
 			word = addr >> 2;
@@ -53,9 +78,14 @@ int main(void)
 				Xil_DCacheInvalidateRange((UINTPTR)&COMM_MEM[word], sizeof(u32));
 
 				data = COMM_MEM[word];
+
 				send_d_mem_data(data);
 
-				//LOG("[ARM-1] Read memory\n");
+				// emulate tri-state
+				//delay_usec(5);
+				//send_d_mem_data(0);
+
+				LOG("[ARM-1] Read memory\n");
 
 			} else {
 				// WRITE -->
@@ -95,11 +125,12 @@ int main(void)
 
 				Xil_DCacheFlushRange((UINTPTR)&COMM_MEM[word], sizeof(u32));
 
-				//LOG("[ARM-1] Write memory\n");
+				LOG("[ARM-1] Write memory\n");
 			}
 		}
 
-		cpu_clk_half_cycle();
+		//cpu_clk_half_cycle();
+		delay_usec(10);
 
 	}
 
