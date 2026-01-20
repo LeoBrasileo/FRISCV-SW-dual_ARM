@@ -9,7 +9,7 @@ int clearMem(){
 	u32 i;
 
 	// Calculate shared DRAM size in 32-bit words
-	words = (ARM1_BASEADDR - COMM_BASE_ADDR) / sizeof(u32);
+	words = COMM_SHARED_SIZE / sizeof(u32);
 	ptr = (volatile u32 *)COMM_BASE_ADDR;
 
 	for (i = 0; i < words; i++) {

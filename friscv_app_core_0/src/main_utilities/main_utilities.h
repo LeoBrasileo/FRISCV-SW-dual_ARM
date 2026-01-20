@@ -39,12 +39,12 @@ void turnDebugOff();
 
 // ARM-1 addresses and instructions
 #define sev() __asm__("sev")
-#define ARM1_STARTADR   0xF8000244      // Correct SLCR register
-#define ARM1_BASEADDR   0x1B500000      // ARM1 code load address
-#define ARM1_SIZE      0x04A00000
-#define COMM_BASE_ADDR 0x17300000
+#define ARM1_STARTADR   0x00100000      // Correct SLCR register
+#define ARM1_BASEADDR   0x200000      // ARM1 code load address
+#define ARM1_SIZE      0x1C100000
+#define COMM_BASE_ADDR 0x300000
 #define COMM_MEM ((volatile unsigned long *)COMM_BASE_ADDR)
-#define COMM_SHARED_SIZE   (62 * 1024 * 1024)  // 62 MB
+#define COMM_SHARED_SIZE   (448 * 1024 * 1024)  // 448 MB
 
 // Internal control flags, last 4 bytes
 #define COMM_CTRL_ADDR   (COMM_BASE_ADDR + COMM_SHARED_SIZE - 4)

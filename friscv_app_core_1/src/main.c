@@ -81,11 +81,7 @@ int main(void)
 
 				send_d_mem_data(data);
 
-				// emulate tri-state
-				//delay_usec(5);
-				//send_d_mem_data(0);
-
-				LOG("[ARM-1] Read memory\n");
+				//LOG("[ARM-1] Read memory\n");
 
 			} else {
 				// WRITE -->
@@ -125,11 +121,10 @@ int main(void)
 
 				Xil_DCacheFlushRange((UINTPTR)&COMM_MEM[word], sizeof(u32));
 
-				LOG("[ARM-1] Write memory\n");
+				//LOG("[ARM-1] Write memory\n");
 			}
 		}
 
-		//cpu_clk_half_cycle();
 		delay_usec(10);
 
 	}
