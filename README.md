@@ -17,12 +17,12 @@ This project implements the software infrastructure that runs on two ARM Cortex-
 │   │  (Control / │◄──────►│  (Memory Arbitration │    │
 │   │   Loader)   │        │   / I/O)             │    │
 │   └──────┬──────┘        └──────────┬───────────┘    │
-│          │  AXI / Shared Memory     │                │
+│          │                          │                │
 │   ┌──────▼──────────────────────────▼────────────┐   │
 │   │          Programmable Logic (PL)             │   │
 │   │                                              │   │
 │   │         RISC-V Soft-Core Processor           │   │
-│   │         (Instruction Execution)              │   │
+│   │                                              │   │
 │   └──────────────────────────────────────────────┘   │
 └──────────────────────────────────────────────────────┘
 ```
