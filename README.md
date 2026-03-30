@@ -12,13 +12,13 @@ This project implements the software infrastructure that runs on two ARM Cortex-
 ┌──────────────────────────────────────────────────────┐
 │                    Zynq SoC                          │
 │                                                      │
-│   ┌─────────────┐        ┌──────────────────────┐   │
-│   │  ARM Core 0 │        │  ARM Core 1          │   │
-│   │  (Control / │◄──────►│  (Memory Arbitration │   │
-│   │   Loader)   │        │   / I/O)             │   │
-│   └──────┬──────┘        └──────────┬───────────┘   │
-│          │  AXI / Shared Memory     │               │
-│   ┌──────▼──────────────────────────▼───────────┐   │
+│   ┌─────────────┐        ┌──────────────────────┐    │
+│   │  ARM Core 0 │        │  ARM Core 1          │    │
+│   │  (Control / │◄──────►│  (Memory Arbitration │    │
+│   │   Loader)   │        │   / I/O)             │    │
+│   └──────┬──────┘        └──────────┬───────────┘    │
+│          │  AXI / Shared Memory     │                │
+│   ┌──────▼──────────────────────────▼────────────┐   │
 │   │          Programmable Logic (PL)             │   │
 │   │                                              │   │
 │   │         RISC-V Soft-Core Processor           │   │
